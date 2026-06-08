@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora UI — Bento Hero</title>
+<style>
+  :root {
+    --accent: #c8ff00;
+    --accent-dim: rgba(200, 255, 0, 0.15);
+    --bg-deep: #050508;
+    --bg-primary: #0a0a0f;
+    --bg-elevated: #12121a;
+    --bg-glass: rgba(10, 10, 15, 0.65);
+    --surface-1: rgba(255, 255, 255, 0.03);
+    --surface-2: rgba(255, 255, 255, 0.06);
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-tertiary: rgba(255, 255, 255, 0.35);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.15);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 40px rgba(200, 255, 0, 0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  /* Floating blobs */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: floatBlob 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob:nth-child(1) {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,245,255,0.25), transparent);
+    top: -10%; left: -5%;
+    animation-duration: 18s;
+  }
+  .blob:nth-child(2) {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,255,0,0.15), transparent);
+    bottom: -5%; right: -5%;
+    animation-duration: 22s;
+    animation-delay: -7s;
+  }
+  .blob:nth-child(3) {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(114,9,183,0.2), transparent);
+    top: 50%; left: 50%;
+    animation-duration: 25s;
+    animation-delay: -12s;
+  }
+  @keyframes floatBlob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(80px, -100px) scale(1.15); }
+    50% { transform: translate(-60px, 80px) scale(0.9); }
+    75% { transform: translate(100px, 50px) scale(1.05); }
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(5,5,8,0.9) 0%, transparent 100%);
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--accent); }
+  nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 32px;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 100%; height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  nav a:hover { color: var(--text-primary); }
+  nav a:hover::after { transform: scaleX(1); }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+  }
+  .hero-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+    backdrop-filter: blur(12px);
+    background: var(--accent-dim);
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .hero h1 span {
+    display: block;
+    background: linear-gradient(135deg, #fff 0%, rgba(200,255,0,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero h1 .accent-word {
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+  }
+  .hero p {
+    max-width: 560px;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3), 0 6px 16px rgba(0,0,0,0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.3), 0 10px 24px rgba(0,0,0,0.4);
+  }
+  .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.3);
+  }
+  .btn-secondary {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-lg);
+  }
+  .btn-secondary:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+
+  /* Bento Grid */
+  .bento-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .bento-item {
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    transition: border-color 0.3s ease, transform 0.3s var(--ease-spring), background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+  }
+  .bento-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    background: var(--surface-2);
+  }
+  .bento-item.span-2 { grid-column: span 2; }
+  .bento-item.span-3 { grid-column: span 3; }
+  .bento-item.row-2 { grid-row: span 2; min-height: 340px; }
+  .bento-item.big { min-height: 340px; }
+
+  /* Spotlight card effect */
+  .bento-item { --spot-x: 50%; --spot-y: 50%; }
+  .bento-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle 180px at var(--spot-x) var(--spot-y), rgba(200,255,0,0.08) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .bento-item:hover::before { opacity: 1; }
+
+  .bento-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .bento-item h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .bento-item p {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+  }
+  .bento-stat {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .bento-label {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Spotlight hover on bento items */
+  .bento-item.featured {
+    border-color: var(--border-accent);
+  }
+
+  /* Marquee */
+  .marquee-section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 0;
+    overflow: hidden;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .marquee {
+    display: flex;
+    gap: 48px;
+    animation: marqueeScroll 30s linear infinite;
+    width: max-content;
+  }
+  .marquee span {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .marquee span em {
+    color: var(--accent);
+    font-style: normal;
+    margin: 0 8px;
+  }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Section heading */
+  .section-heading {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-heading h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .section-heading p {
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 48px 40px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+  }
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  footer a:hover { color: var(--accent); }
+
+  /* Scroll progress */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), rgba(0,245,255,0.8));
+    width: 0%;
+    z-index: 1000;
+    transition: width 50ms linear;
+  }
+
+  /* Glass card for featured */
+  .glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .bento-item.span-3 { grid-column: span 2; }
+    nav { padding: 16px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .bento-section { padding: 0 20px 80px; }
+    nav .nav-links { display: none; }
+  }
+  @media (max-width: 480px) {
+    .bento { grid-template-columns: 1fr; }
+    .bento-item.span-2, .bento-item.span-3 { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<div class="blob"></div>
+<div class="blob"></div>
+<div class="blob"></div>
+
+<nav>
+  <div class="logo">Aurora<span>UI</span></div>
+  <div class="nav-links">
+    <a href="#">Features</a>
+    <a href="#">Work</a>
+    <a href="#">Pricing</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">✦ Cinematic Design System</div>
+  <h1>
+    <span>Spectacular</span>
+    <span>by design.<span class="accent-word">_</span></span>
+  </h1>
+  <p>
+    Award-caliber web experiences that blend Lusion-level visual spectacle
+    with Apple-level minimalist elegance. Every pixel intentional.
+  </p>
+  <div class="btn-group">
+    <button class="btn btn-primary">Get Started</button>
+    <button class="btn btn-secondary">View Showcase</button>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee">
+    <span>✦ Scroll Narratives <em>·</em> 3D Carousel <em>·</em> Spring Physics <em>·</em> Particle Ribbons <em>·</em> Glassmorphism <em>·</em> Mesh Gradients <em>·</em> Magnetic Cursor <em>·</em> Curtain Transitions <em>·</em> Bento Grid <em>·</em> Tilt Cards <em>·</em></span>
+    <span>✦ Scroll Narratives <em>·</em> 3D Carousel <em>·</em> Spring Physics <em>·</em> Particle Ribbons <em>·</em> Glassmorphism <em>·</em> Mesh Gradients <em>·</em> Magnetic Cursor <em>·</em> Curtain Transitions <em>·</em> Bento Grid <em>·</em> Tilt Cards <em>·</em></span>
+  </div>
+</div>
+
+<section class="bento-section">
+  <div class="section-heading">
+    <h2>The Full Toolkit</h2>
+    <p>25+ production-ready techniques from Lusion, Apple, Linear, Stripe, and Awwwards winners — in one unified system.</p>
+  </div>
+  <div class="bento">
+    <div class="bento-item span-2">
+      <span class="bento-icon">🎬</span>
+      <h3>Scroll-Driven Narratives</h3>
+      <p>Lenis-style smooth scroll with inertia, progress mapping, and IntersectionObserver-triggered reveals. Animations that follow the story.</p>
+    </div>
+    <div class="bento-item">
+      <span class="bento-icon">🌀</span>
+      <h3>3D Carousel</h3>
+      <p>Perspective-driven horizontal scroll with depth and spotlight hover effects.</p>
+    </div>
+    <div class="bento-item">
+      <span class="bento-icon">✨</span>
+      <h3>Spring Physics</h3>
+      <p>Character-by-character text reveals and magnetic buttons with spring easing.</p>
+    </div>
+    <div class="bento-item">
+      <span class="bento-icon">〰️</span>
+      <h3>Particle Ribbons</h3>
+      <p>Canvas-based simplex noise ribbons that flow and respond to scroll momentum.</p>
+    </div>
+    <div class="bento-item featured">
+      <span class="bento-icon">🪟</span>
+      <h3>Glassmorphism</h3>
+      <p>Linear-style glass cards with 20px blur, subtle borders, and luminous depth.</p>
+    </div>
+    <div class="bento-item">
+      <div class="bento-stat">27</div>
+      <div class="bento-label">Components</div>
+    </div>
+    <div class="bento-item">
+      <div class="bento-stat">0</div>
+      <div class="bento-label">Dependencies</div>
+    </div>
+    <div class="bento-item span-2">
+      <span class="bento-icon">🎨</span>
+      <h3>Design Token System</h3>
+      <p>Comprehensive CSS custom properties — typography, spacing (8pt grid), shadows, blurs, easing curves. One accent color changes everything.</p>
+    </div>
+    <div class="bento-item span-2 row-2">
+      <span class="bento-icon">🌊</span>
+      <h3>Mesh Gradient + Floating Blobs</h3>
+      <p>Stripe-style animated mesh gradients that shift across the background in a 12-second loop. Floating blobs with 20-second organic float animations create atmospheric depth.</p>
+      <p style="margin-top:12px; color:var(--accent);">GPU-accelerated. Zero layout thrashing.</p>
+    </div>
+    <div class="bento-item">
+      <span class="bento-icon">🔥</span>
+      <h3>Animated Borders</h3>
+      <p>Conic gradient borders with CSS @property animation, plus glow trace paths.</p>
+    </div>
+    <div class="bento-item">
+      <span class="bento-icon">🖱️</span>
+      <h3>Magnetic Cursor</h3>
+      <p>Elements that pull toward the cursor with spring dynamics and 3D tilt.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Aurora UI — Built with ✨ by <a href="https://github.com/pppyx-hub">pppyx</a> &middot; MIT License
+</footer>
+
+<script>
+  // Scroll progress
+  const progressBar = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+
+  // Spotlight on bento items
+  document.querySelectorAll('.bento-item').forEach(item => {
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      item.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
+      item.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+    });
+  });
+</script>
+</body>
+</html>
