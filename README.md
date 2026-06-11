@@ -1,166 +1,142 @@
-# ✨ Aurora UI — Cinematic Web Design System
+# ✨ Aurora UI — Style-Driven Design System v9
 
-> **Premium, award-caliber web UI components and techniques.**  
-> Born from Lusion, Apple, Linear, Stripe, and Awwwards-winning inspiration.  
-> Zero dependencies. Pure vanilla HTML/CSS/JS. One file.
+> **11 aesthetics that change structure, not just colors.**  
+> Compose, don't template. Every website unique. Every pixel earned.
 
-![Aurora UI Banner](https://img.shields.io/badge/Aurora_UI-v3.0-0a0a0f?style=flat-square&labelColor=0a0a0f&color=c8ff00)
+[![Aurora UI](https://img.shields.io/badge/Aurora_UI-v9.0.0-0a0a0f?style=flat-square&labelColor=0a0a0f&color=c8ff00)](https://github.com/pppyx-hub/aurora-ui)
 
 ---
 
 ## What is Aurora UI?
 
-Aurora UI is both a **design system** and a **Hermes Agent skill** for creating stunning single-page websites with cinematic visual effects. It distills award-winning web design patterns — scroll-driven narratives, 3D carousels, particle ribbons, spring physics animations, glassmorphism, magnetic interfaces, and more — into **25+ ready-to-use techniques** with a unified design language.
+Aurora UI is a **style-driven design system** for creating premium single-page websites (pure HTML/CSS/JS, single file, < 150KB) with a **complete product design workflow** — requirement analysis, design plan, build, code review, and delivery.
 
-**The Aurora Principle:** *Spectacular Minimalism* — every pixel intentional, every animation meaningful, zero framework bloat.
+### Core Philosophy: Anti-Template
 
-### ✨ What You Can Build
+**Style is NOT a color swap. Style is STRUCTURE.** 11 aesthetics each fundamentally change the layout, spacing, content density, animation approach, AND which sections to include. A Wabi-Sabi environmental site looks nothing like a Brutalism one — because they're built from different structural rules.
 
-| Technique | Description |
-|-----------|-------------|
-| Scroll Narratives | Lenis-style smooth scroll with inertia + progress mapping |
-| 3D Carousel | Perspective-driven horizontal scroll with depth |
-| Spring Physics | Character-by-character text reveals with spring easing |
-| Particle Ribbons | Canvas-based simplex noise ribbons that respond to scroll |
-| Glassmorphism | Linear-style glass cards with blur and subtle borders |
-| Mesh Gradients | Stripe-style animated gradient backgrounds |
-| Magnetic Cursor | Elements that pull toward the cursor with spring dynamics |
-| Curtain Transitions | Dramatic section transitions with staggered bars |
-| Animated Borders | CSS `@property` conic gradient borders + glow traces |
-| Spotlight Cards | Mouse-tracked radial gradient overlays |
-| Bento Grids | Apple-style adaptive grid layouts |
-| Tilt 3D Cards | Perspective tilt on hover with spring return |
-| Liquid Reveals | Clip-path mask transitions |
-| And more… | 25+ techniques in total, all production-ready |
+### 11 Aesthetics
 
-### 🎨 Design Token System
-
-Aurora UI ships with a comprehensive CSS custom property system covering:
-
-- **Accent colors** — configurable primary + dim variants
-- **Deep space palette** — 5-level dark background hierarchy
-- **Surface system** — 3-tier surface opacity + 4-tier text hierarchy
-- **8pt spacing grid** — Apple/Linear-style `--space-xs` through `--space-4xl`
-- **Typography scale** — `--text-xs` through `--text-9xl`
-- **Radius system** — `--radius-sm` through `--radius-full`
-- **Spring easing** — `--ease-spring` (0.34, 1.56, 0.64, 1)
-- **Shadow depth** — 4-tier + glow variants
-- **Blur system** — `--blur-sm` through `--blur-xl`
-
-All tokens are customizable — change your accent color and the whole system adapts.
+| Style | Vibe |
+|-------|------|
+| **Wabi-Sabi** | Stillness, void, muted earth tones, generous whitespace |
+| **Brutalism** | Raw honesty, bold outlines, solid shadows, confrontation |
+| **Dark Cinematic** (Default) | Immersion, deep blacks, glowing accents, particles |
+| **Editorial** | High-fashion magazine, huge serif typography, asymmetric grid |
+| **Pure White Premium** | Apple/Stripe/Linear quality, crisp, micro-interactions |
+| **Y2K** | Holographic gradients, pixel fonts, Win95 UI, scanlines |
+| **Memphis** | 80s post-modern chaos, geometric shapes, high-saturation |
+| **Retro Vintage** | 1950s-70s warmth, mustard/rust/avocado, print textures |
+| **Claymorphism** | Soft pillowy shapes, high border-radius, double shadows |
+| **Parallax Scenic** | Layered depth, scroll-driven parallax, CSS gradient scenes |
+| **Typography-Driven** | Type IS the design, massive scale, monochrome + one accent |
 
 ---
 
-## 🚀 Quick Start
-
-### Option 1: As a Hermes Agent Skill
-
-If you use [Hermes Agent](https://hermes-agent.nousresearch.com):
-
-```bash
-# Install the skill
-hermes skills install pppyx-hub/aurora-ui
-
-# Or clone and install manually
-git clone https://github.com/pppyx-hub/aurora-ui.git
-hermes skills install ./aurora-ui/skill
-```
-
-Then load it in any Hermes session:
-```
-# Ask your agent to load the skill
-skill_view(name='aurora-ui')
-```
-
-### Option 2: Standalone (No Hermes)
-
-Just open any example file in your browser:
-
-```bash
-git clone https://github.com/pppyx-hub/aurora-ui.git
-cd aurora-ui/examples
-# Open any .html file in your browser
-```
-
-Each example is a self-contained single HTML file — zero build step, zero dependencies.
-
-### Option 3: Build Your Own
-
-1. Copy the CSS custom properties from `docs/quick-reference.md` into your project
-2. Pick the components you need from `examples/`
-3. Mix and match — everything is designed to compose together
-
----
-
-## 📂 Repository Structure
+## Architecture
 
 ```
 aurora-ui/
-├── README.md                 # You are here
-├── LICENSE                   # MIT
 ├── skill/
-│   └── SKILL.md              # Hermes Agent skill (full reference)
+│   └── SKILL.md              # Main skill: workflow, section library, code review
+├── references/
+│   ├── style-tokens.md        # 11 styles' complete CSS token systems
+│   ├── animation-lib.md       # 20+ copy-paste animation patterns
+│   ├── motion-engine.md       # Spring physics, scroll-linked, gestures
+│   ├── components.md          # Nav, hero, buttons, forms, showcase, etc.
+│   └── troubleshooting.md     # Diagnostic flow for common issues
+├── templates/
+│   └── starter.html           # HTML5 skeleton with security meta tags
 ├── examples/
-│   ├── bento-hero.html       # Bento grid hero with particle ribbon
-│   ├── carousel-showcase.html# 3D carousel + curtain transitions
-│   ├── pricing-cards.html    # Pricing with animated borders + toggle
-│   └── landing-complete.html # Full page: every technique combined
-└── docs/
-    └── quick-reference.md    # Design tokens + technique index
+│   └── antiwar.html, bento-hero.html   # Legacy v3 examples
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## 🎯 Features At a Glance
+## Quick Start
 
-- **Zero dependencies** — Pure HTML/CSS/JS. No frameworks, no build tools.
-- **Single-file philosophy** — Each example is one self-contained HTML file.
-- **GPU-accelerated** — Animates only `transform` and `opacity`. 60 FPS guaranteed.
-- **Accessibility-first** — WCAG AA contrast, `prefers-reduced-motion` support, keyboard navigation.
-- **Responsive** — Mobile-first with touch-aware interactions.
-- **Dark cinematic aesthetic** — Deep backgrounds, luminous accents, atmospheric depth.
-- **Performance budget** — Each page < 150KB uncompressed.
+### As a Hermes Agent Skill (Recommended)
 
-### Performance Rules (Hard Constraints)
+```bash
+# The skill is loaded automatically when working with aurora-ui
+# Just tell the agent: "Use aurora-ui to build a landing page"
+```
 
-| Rule | Why |
-|------|-----|
-| Animate only `transform` + `opacity` | GPU compositing, no layout thrashing |
-| Max 500 particles per canvas | Keep 60 FPS on mobile |
-| `{ passive: true }` on scroll handlers | Never block the scroll thread |
-| `IntersectionObserver` over scroll events | Browser-optimized reveal detection |
-| Max 2-3 concurrent canvas systems | GPU memory budget |
-| `backdrop-filter: blur()` ≤ 20px | Mobile rendering cost |
-| Debounce resize to 250ms | Avoid layout storms |
+### Manual Use (Any AI/Editor)
+
+1. Load `skill/SKILL.md` into your AI prompt
+2. Reference the files in `references/` as needed
+3. Start from `templates/starter.html` for a blank canvas
 
 ---
 
-## 🖥️ Browser Support
+## 6-Stage Workflow
 
-- Chrome 90+ / Edge 90+
-- Firefox 90+
-- Safari 15+
-- iOS Safari 15+
-
----
-
-## 📜 License
-
-MIT — use it freely in personal and commercial projects. See [LICENSE](LICENSE).
+1. **Requirement Analysis** — Understand product, audience, constraints
+2. **Design Plan (Style-Driven)** — Pick 1-2 styles, design structure per style
+3. **Ask & Clarify** — 8 targeted questions before coding
+4. **Build** — Compose sections, apply tokens, add effects sparingly
+5. **Code Review** — Security, accessibility, performance, responsive checks
+6. **Ship & Iterate** — Deliver, collect feedback, refine
 
 ---
 
-## 🙏 Inspiration & Credits
+## Section Library (15 Building Blocks)
 
-Aurora UI synthesizes patterns and techniques from the best in web design:
-
-- **[Lusion](https://lusion.co/)** — 3D scroll narratives, particle systems
-- **[Apple](https://www.apple.com/)** — Minimalist elegance, scroll reveals
-- **[Linear](https://linear.app/)** — Glassmorphism, dark premium UI
-- **[Stripe](https://stripe.com/)** — Animated mesh gradients
-- **[21st.dev](https://21st.dev/)** — Magnetic buttons, animated borders, tilt cards
-- **[Awwwards](https://www.awwwards.com/)** / **[FWA](https://thefwa.com/)** — Award-winning structural patterns
+| Block | Section | When to Use |
+|-------|---------|-------------|
+| A | Hero | Landing page first impression |
+| B | Marquee | Visual break + social proof |
+| C | Problem Statement | Hook by naming user's pain |
+| D | Overview | Clear explanation |
+| E | Features / Benefits | 3-6 capability cards |
+| F | Stats / Metrics | Quantify impact |
+| G | Showcase / Portfolio | Visual proof |
+| H | How It Works | Demystify complexity |
+| I | Social Proof | Third-party validation |
+| J | Pricing | Investment options |
+| K | Team / Founder | Humanize the brand |
+| L | FAQ | Remove conversion objections |
+| M | CTA | Final action push |
+| N | Newsletter | Capture interest |
+| O | Footer | Navigation + legal |
 
 ---
 
-Built with ✨ by [pppyx](https://github.com/pppyx-hub)
+## Companion Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `aurora-client-kickoff` | Client conversation workflow — from vague brief to clear design plan |
+| `aurora-fiverr-delivery` | Fiverr file packaging, delivery checklist, order response templates |
+
+---
+
+## Design Principles
+
+| Principle | Meaning |
+|-----------|---------|
+| **Content-first spectacle** | Effects serve the story, not vice versa |
+| **Mobile-first** | Base layout for 320px, enhance upward |
+| **Zero vulnerabilities** | CSP, XSS-safe DOM, no eval |
+| **GPU-accelerated only** | Animate `transform` + `opacity` only |
+| **Every animation has intent** | No gratuitous motion |
+| **Accessible by default** | WCAG AA, reduced-motion, keyboard nav |
+| **Single file, zero deps** | One HTML file, inline CSS+JS, < 150KB |
+
+---
+
+## Version History
+
+| Version | Date | Highlights |
+|---------|------|------------|
+| **v9.0.0** | 2026-06-07 | Complete rewrite: 11 styles, 15 sections, spring physics engine, motion engine, security-first code review, anti-template principle |
+| **v3.0.0** | 2026-06-07 | Initial open-source release: cinematic techniques collection |
+
+---
+
+## License
+
+MIT — feel free to use, modify, and distribute.
